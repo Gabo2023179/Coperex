@@ -1,32 +1,40 @@
 import { body, param } from "express-validator";
-import { emailExists, usernameExists, userExists, validateUserNotDeleted } from "../helpers/db-validators.js";
+import { emailExists, usernameExists, userExists, validateUserNotDeleted, esAdmin } from "../helpers/db-validators.js";
 import { validarCampos } from "./validate-fields.js";
 import { handleErrors } from "./handle-errors.js";
 import { hasRoles, validateUpdateRole } from "./validate-roles.js";
 import { validateJWT } from "./validate-jwt.js";
 import { check } from "express-validator";
+import { existeAdmin } from "../helpers/db-validators.js"
 
 
 export const registerValidator = [
+    esAdmin,
     body("name").notEmpty().withMessage("El nombre es requerido"),
     body("username").notEmpty().withMessage("El username es requerido"),
-    body("email").notEmpty().withMessage("El email es requerido"),
-    body("email").isEmail().withMessage("No es un email válido"),
-    body("email").custom(emailExists),
+    body("email")
+        .notEmpty().withMessage("El email es requerido")
+        .isEmail().withMessage("No es un email válido")
+        .custom(emailExists),
     body("username").custom(usernameExists),
     body("password").isStrongPassword({
         minLength: 8,
-        minLowercase:1,
+        minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1
-    }),  
-    body("role").optional().isIn(["ADMIN", "CLIENT"]).withMessage("Rol no válido, debe ser 'ADMIN' o 'CLIENT'"), /* Aqui hacemos que role sea opcional para que por default un usuario sea CLIENT,
-     verificamos si los roles son ADMIN O CLIENT .isIN y tiramos mesaje.
-    */
+    }).withMessage("La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo"),
+    
+    body("role")
+        .notEmpty().withMessage("El rol es requerido")
+        .isIn(["ADMIN"]).withMessage("Solo se permiten roles ADMIN o CLIENT"),
+
     validarCampos,
     handleErrors
-]
+];
+
+
+
 export const loginValidator = [
     body("email").optional().isEmail().withMessage("No es un email válido"),
     body("username").optional().isString().withMessage("Username es en formáto erróneo"),
@@ -69,3 +77,19 @@ export const updateUserValidator = [
     validarCampos, // Revisa si hay errores en las validaciones antes de continuar.
     handleErrors // Maneja errores y los devuelve en formato JSON.
 ];
+
+export const defaultAdmin = () => {
+    if(!existeAdmin){
+        req.defaultAdmin = {
+            "name": "admin",
+            "surname": "123",
+            "username": "admin123",
+            "email": "admin123@example.com",
+            "password": "SecureP@ssword123",
+            "phone": "12345678",
+            "role": "ADMIN",
+            "status": true
+        };
+        next();
+    }
+}

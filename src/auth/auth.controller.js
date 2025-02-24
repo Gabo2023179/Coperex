@@ -16,10 +16,6 @@ export const register = async (req, res) => {
         // Extrae los datos enviados en la solicitud HTTP.
         const data = req.body;
 
-        if (!data.role) {
-            data.role = "CLIENT";
-        }
-
         // Cifra la contraseña antes de almacenarla en la base de datos.
         // El método "hash" de Argon2 genera una versión encriptada segura de la contraseña del usuario.
         const encryptedPassword = await hash(data.password);

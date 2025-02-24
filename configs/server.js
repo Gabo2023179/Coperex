@@ -10,6 +10,8 @@ import userRoutes from "../src/user/user.routes.js" // Rutas de gestión de usua
 import petRoutes from "../src/pet/pet.routes.js" // Rutas de gestión de mascotas
 import appointmentRoutes from "../src/appointment/appointment.routes.js" // Rutas de gestión de citas
 import apiLimiter from "../src/middlewares/rate-limit-validator.js" // Middleware para limitar las solicitudes por usuario
+import { defaultAdmin } from "../src/middlewares/user-validators.js"
+import { register } from "../src/auth/auth.controller.js"
 
 /**
  * Configura los middlewares globales de la aplicación.
@@ -59,6 +61,8 @@ export const initServer = () => {
         routes(app) // Configura las rutas de la API
         app.listen(process.env.PORT) // Inicia el servidor en el puerto definido en las variables de entorno
         console.log(`Server running on port ${process.env.PORT}`) // Muestra un mensaje en consola confirmando que el servidor está corriendo
+        defaultAdmin();
+        register()
     }catch(err){
         console.log(`Server init failed: ${err}`) // Muestra un mensaje de error en caso de falla
     }
