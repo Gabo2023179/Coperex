@@ -7,11 +7,7 @@ import morgan from "morgan" // Middleware para registrar solicitudes HTTP en la 
 import { dbConnection } from "./mongo.js" // Importa la función de conexión a la base de datos MongoDB
 import authRoutes from "../src/auth/auth.routes.js" // Rutas de autenticación
 import userRoutes from "../src/user/user.routes.js" // Rutas de gestión de usuarios
-import petRoutes from "../src/pet/pet.routes.js" // Rutas de gestión de mascotas
-import appointmentRoutes from "../src/appointment/appointment.routes.js" // Rutas de gestión de citas
 import apiLimiter from "../src/middlewares/rate-limit-validator.js" // Middleware para limitar las solicitudes por usuario
-import { defaultAdmin } from "../src/middlewares/user-validators.js"
-import { register } from "../src/auth/auth.controller.js"
 import { createDefaultAdmin } from "../src/middlewares/user-validators.js"
 
 /**
@@ -32,10 +28,9 @@ const middlewares = (app) => {
  * @param {object} app - Instancia de la aplicación Express.
  */
 const routes = (app) => {
-   // app.use("/adoptionSystem/v1/auth", authRoutes) // Rutas de autenticación
-    ///app.use("/adoptionSystem/v1/user", userRoutes) // Rutas de gestión de usuarios
-   // app.use("/adoptionSystem/v1/pet", petRoutes) // Rutas de gestión de mascotas
-    //app.use("/adoptionSystem/v1/appointment", appointmentRoutes) // Rutas de gestión de citas
+   // app.use("/coperex/v1/auth", authRoutes) // Rutas de autenticación
+    ///app.use("/coperex/v1/user", userRoutes) // Rutas de gestión de usuarios
+   // app.use("/coperex/v1/company", companyRoutes) // Rutas de gestión de companias}
 }
 
 /**

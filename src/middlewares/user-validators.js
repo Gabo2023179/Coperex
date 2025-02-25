@@ -12,10 +12,7 @@ export const registerValidator = [
     esAdmin,
     body("name").notEmpty().withMessage("El nombre es requerido"),
     body("username").notEmpty().withMessage("El username es requerido"),
-    body("email")
-        .notEmpty().withMessage("El email es requerido")
-        .isEmail().withMessage("No es un email válido")
-        .custom(emailExists),
+    body("email").notEmpty().withMessage("El email es requerido").isEmail().withMessage("No es un email válido").custom(emailExists),
     body("username").custom(usernameExists),
     body("password").isStrongPassword({
         minLength: 8,
@@ -24,11 +21,7 @@ export const registerValidator = [
         minNumbers: 1,
         minSymbols: 1
     }).withMessage("La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo"),
-    
-    body("role")
-        .notEmpty().withMessage("El rol es requerido")
-        .isIn(["ADMIN"]).withMessage("Solo se permiten roles ADMIN o CLIENT"),
-
+    body("role").notEmpty().withMessage("El rol es requerido").isIn(["ADMIN"]).withMessage("Solo se permiten roles ADMIN"),
     validarCampos,
     handleErrors
 ];
