@@ -5,17 +5,17 @@ const options ={
     swaggerDefinition:{
         openapi:"3.0.0",
         info:{
-            title: "Adoption System API",
+            title: "Caso Coperex",
             version: "1.0.0",
-            description: "API para un sistema de gestión de adopciones de mascotas",
+            description: "API para un sistema de gestión de ingreso de empresas",
             contact:{
-                name: "Braulio Echeverria",
-                email: "braulioecheverria@kinal.org.gt"
+                name: "Gabriel Contreras",
+                email: "jcontreras-2023179@kinal.edu.gt"
             }
         },
         servers:[
             {
-                url: "http://127.0.0.1:3001/adoptionSystem/v1"
+                url: "http://127.0.0.1:300/adoptionSystem/v1"
             }
         ]
     },
