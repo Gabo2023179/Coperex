@@ -22,7 +22,7 @@ const options ={
     apis:[
         "./src/auth/auth.routes.js",
         "./src/user/user.routes.js",
-        "./src/company/comapny.routes.js"
+        "./src/company/company.routes.js"
     ]
 }
 

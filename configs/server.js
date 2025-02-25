@@ -9,6 +9,8 @@ import authRoutes from "../src/auth/auth.routes.js" // Rutas de autenticación
 import userRoutes from "../src/user/user.routes.js" // Rutas de gestión de usuarios
 import apiLimiter from "../src/middlewares/rate-limit-validator.js" // Middleware para limitar las solicitudes por usuario
 import { createDefaultAdmin } from "../src/middlewares/user-validators.js"
+import companyRoutes from "../src/company/company.routes.js"
+import { swaggerDocs, swaggerUi } from "./swagger.js";
 
 /**
  * Configura los middlewares globales de la aplicación.
@@ -28,9 +30,10 @@ const middlewares = (app) => {
  * @param {object} app - Instancia de la aplicación Express.
  */
 const routes = (app) => {
-   // app.use("/coperex/v1/auth", authRoutes) // Rutas de autenticación
-    ///app.use("/coperex/v1/user", userRoutes) // Rutas de gestión de usuarios
-   // app.use("/coperex/v1/company", companyRoutes) // Rutas de gestión de companias}
+    app.use("/coperex/v1/auth", authRoutes) // Rutas de autenticación
+    app.use("/coperex/v1/user", userRoutes) // Rutas de gestión de usuarios
+    app.use("/coperex/v1/company", companyRoutes) // Rutas de gestión de companias}
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 }
 
 /**
