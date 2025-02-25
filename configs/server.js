@@ -7,8 +7,8 @@ import morgan from "morgan" // Middleware para registrar solicitudes HTTP en la 
 import { dbConnection } from "./mongo.js" // Importa la función de conexión a la base de datos MongoDB
 import authRoutes from "../src/auth/auth.routes.js" // Rutas de autenticación
 import userRoutes from "../src/user/user.routes.js" // Rutas de gestión de usuarios
-import petRoutes from "../src/pet/pet.routes.js" // Rutas de gestión de mascotas
 import apiLimiter from "../src/middlewares/rate-limit-validator.js" // Middleware para limitar las solicitudes por usuario
+import { createDefaultAdmin } from "../src/middlewares/user-validators.js"
 
 /**
  * Configura los middlewares globales de la aplicación.
@@ -49,12 +49,13 @@ const conectarDB = async () =>{
 /**
  * Inicializa el servidor Express.
  */
-export const initServer = () => {
+export const initServer = async() => {
     const app = express() // Crea una instancia de Express
     try{
         middlewares(app) // Configura los middlewares
-        conectarDB() // Conecta con la base de datos
-        routes(app) // Configura las rutas de la API
+        await conectarDB() // Conecta con la base de datos
+        await createDefaultAdmin()
+        routes(app) // Configura las rutas de la API   
         app.listen(process.env.PORT) // Inicia el servidor en el puerto definido en las variables de entorno
         console.log(`Server running on port ${process.env.PORT}`) // Muestra un mensaje en consola confirmando que el servidor está corriendo
     }catch(err){
