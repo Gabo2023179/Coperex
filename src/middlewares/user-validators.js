@@ -54,7 +54,7 @@ export const getUserByIdValidator = [
 
 export const deleteUserValidator = [
     validateJWT, // Verifica que el usuario tenga un token válido
-    hasRoles("ADMIN", "CLIENT"), // Solo ADMIN o CLIENT pueden eliminar usuarios
+    hasRoles("ADMIN"), // Solo ADMIN o CLIENT pueden eliminar usuarios
     check("usuario").custom(validateUserNotDeleted), // Usa el validador importado
     validarCampos, // Revisa si hay errores en la validación antes de continuar
     handleErrors // Maneja errores y los devuelve en formato JSON
@@ -72,24 +72,33 @@ export const adminUpdateUserValidator = [
 
 export const updateUserValidator = [
     validateJWT, // Verifica que el usuario tenga un token JWT válido.
-    hasRoles("ADMIN", "CLIENT"), // Solo ADMIN y CLIENT pueden actualizar usuarios.
+    hasRoles("ADMIN"), // Solo ADMIN y CLIENT pueden actualizar usuarios.
     validateUpdateRole, // Valida que los cambios en el rol sean correctos.
     validarCampos, // Revisa si hay errores en las validaciones antes de continuar.
     handleErrors // Maneja errores y los devuelve en formato JSON.
 ];
 
-export const defaultAdmin = () => {
-    if(!existeAdmin){
-        req.defaultAdmin = {
-            "name": "admin",
-            "surname": "123",
-            "username": "admin123",
-            "email": "admin123@example.com",
-            "password": "SecureP@ssword123",
-            "phone": "12345678",
-            "role": "ADMIN",
-            "status": true
+
+export const createDefaultAdmin = async () => {
+    try {
+      const adminExists = await User.findOne({ role: "ADMIN" });
+      if (!adminExists) {
+        const defaultAdmin = {
+          name: "admin",
+          surname: "123",
+          username: "admin123",
+          email: "admin123@example.com",
+          password: await hash("SecureP@ssword123"),
+          phone: "12345678",
+          role: "ADMIN",
+          status: true,
         };
-        next();
+        await User.create(defaultAdmin);
+        console.log("Default admin created");
+      } else {
+        console.log("Admin already exists");
+      }
+    } catch (error) {
+      console.error(`"Error creating default admin:", ${error}`);
     }
-}
+  };
