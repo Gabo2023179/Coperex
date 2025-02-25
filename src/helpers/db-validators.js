@@ -49,3 +49,21 @@ export const validateUserNotDeleted = async (_, { req }) => {
     }
     return true; // Si el usuario está activo, la validación pasa
 };
+
+export const esAdmin = (req, res, next) => {
+    if (!req.user || req.user.role !== "ADMIN") {
+        return res.status(403).json({
+            msg: "No tienes permisos para realizar esta acción"
+        });
+    }
+    next();
+};
+
+export const existeAdmin = async() => {
+    const exist = await User.findAll({"role": "ADMIN"});
+    if(!exist){
+        return false
+    }
+    return true;
+}
+
