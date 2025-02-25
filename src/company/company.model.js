@@ -6,38 +6,40 @@ const CompanySchema = new Schema(
       type: String,
       required: [true, "El nombre de la empresa es obligatorio"],
       trim: true,
+      unique: true, // Evita nombres duplicados
     },
     description: {
       type: String,
       required: [true, "La descripción es obligatoria"],
+      trim: true,
     },
     levelImpact: {
       type: String,
       required: [true, "El nivel de impacto es obligatorio"],
-      enum: ["Bajo", "Medio", "Alto"],
+      enum: ["Bajo", "Medio", "Alto"], // Solo permite estos valores
     },
     yearsTrajectory: {
       type: Number,
       required: [true, "Los años de trayectoria son obligatorios"],
-      min: 0,
+      min: [0, "Los años de trayectoria no pueden ser negativos"],
     },
     category: {
       type: String,
       required: [true, "La categoría empresarial es obligatoria"],
-      trim: true,
+      trim: true, // 🚀 Ahora el ADMIN puede ingresar cualquier categoría
     },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: true, // Solo el ADMIN puede registrar empresas
     },
     status: {
       type: Boolean,
-      default: true, // Indica si la empresa sigue activa (no se elimina físicamente)
+      default: true, // Indica si la empresa está activa
     },
   },
   {
-    timestamps: true, // Añade createdAt y updatedAt automáticamente
+    timestamps: true, // Añade automáticamente "createdAt" y "updatedAt"
     versionKey: false,
   }
 );
