@@ -15,15 +15,14 @@ const options ={
         },
         servers:[
             {
-                url: "http://127.0.0.1:300/adoptionSystem/v1"
+                url: "http://127.0.0.1:3000/coperex/v1"
             }
         ]
     },
     apis:[
         "./src/auth/auth.routes.js",
         "./src/user/user.routes.js",
-        "./src/pet/pet.routes.js",
-        "./src/appointment/appointment.routes.js"
+        "./src/company/comapny.routes.js"
     ]
 }
 
