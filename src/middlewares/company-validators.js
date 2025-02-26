@@ -1,17 +1,8 @@
 import { body, param, query } from "express-validator";
 import { validarCampos } from "../middlewares/validate-fields.js";
 import { handleErrors } from "../middlewares/handle-errors.js";
-import Company from "./company.model.js";
+import { companyExists, foundingYearValidator }from "../helpers/db-validators.js"
 
-/**
- * Verifica si una empresa con el ID proporcionado existe en la base de datos.
- */
-export const companyExists = async (id = "") => {
-  const existe = await Company.findById(id);
-  if (!existe) {
-    throw new Error("No existe la empresa con el ID proporcionado");
-  }
-};
 
 /**
  * Validaciones para crear una empresa
@@ -20,7 +11,7 @@ export const createCompanyValidator = [
   body("name").notEmpty().withMessage("El nombre de la empresa es obligatorio").trim(),
   body("description").notEmpty().withMessage("La descripción de la empresa es obligatoria").trim(),
   body("levelImpact").isIn(["Bajo", "Medio", "Alto"]).withMessage("El nivel de impacto debe ser 'Bajo', 'Medio' o 'Alto'"),
-  body("yearsTrajectory").isNumeric().withMessage("Los años de trayectoria deben ser un número válido").isInt({ min: 0 }).withMessage("Los años de trayectoria no pueden ser negativos"),
+  body("yearsTrajectory").isNumeric().withMessage("Los años de trayectoria deben ser un número válido").isInt({ min: 0 }).withMessage("Los años de trayectoria no pueden ser negativos").custom(foundingYearValidator),
   body("category").notEmpty().withMessage("La categoría de la empresa es obligatoria").isString().withMessage("La categoría debe ser un texto válido"),
   validarCampos,
   handleErrors,

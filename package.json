@@ -10,7 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "type": "module",
+  "description": "Api para administracion de empresas",
   "dependencies": {
     "argon2": "^0.41.1",
     "coperex-2023179": "file:",

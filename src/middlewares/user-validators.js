@@ -5,7 +5,9 @@ import { handleErrors } from "./handle-errors.js";
 import { hasRoles, validateUpdateRole } from "./validate-roles.js";
 import { validateJWT } from "./validate-jwt.js";
 import { check } from "express-validator";
-import { existeAdmin } from "../helpers/db-validators.js"
+import User from "../user/user.model.js";
+import { hash } from "argon2"; 
+import { generateJWT } from "../helpers/generate-jwt.js"; // Asegúrate de tener bcryptjs instalado
 
 
 export const registerValidator = [
@@ -72,26 +74,48 @@ export const updateUserValidator = [
 ];
 
 
-export const createDefaultAdmin = async () => {
-    try {
-      const adminExists = await User.findOne({ role: "ADMIN" });
-      if (!adminExists) {
-        const defaultAdmin = {
-          name: "admin",
-          surname: "123",
-          username: "admin123",
-          email: "admin123@example.com",
-          password: await hash("SecureP@ssword123"),
-          phone: "12345678",
-          role: "ADMIN",
-          status: true,
-        };
-        await User.create(defaultAdmin);
-        console.log("Default admin created");
-      } else {
-        console.log("Admin already exists");
-      }
-    } catch (error) {
-      console.error(`"Error creating default admin:", ${error}`);
+export const createDefaultAdmin = async (req, res) => {
+  // Si res no está definido, asignar un objeto dummy que permita evitar el error
+  res = res || { status: (code) => ({ json: (data) => data }) };
+
+  try {
+    const adminExists = await User.findOne({ role: "ADMIN" });
+    if (!adminExists) {
+      const defaultAdmin = {
+        name: "admin",
+        surname: "123",
+        username: "admin123",
+        email: "admin123@example.com",
+        password: await hash("SecureP@ssword123"),
+        phone: "12345678",
+        role: "ADMIN",
+        status: true,
+      };
+
+      const createdAdmin = await User.create(defaultAdmin);
+      
+      // Generar el token para el admin creado
+      const token = await generateJWT(createdAdmin._id);
+      
+      return res.status(201).json({
+        success: true,
+        message: "Default admin created",
+        token,
+      });
+    } else {
+      // Si el admin ya existe, generamos un token nuevo para el admin existente
+      const token = await generateJWT(adminExists._id);
+      return res.status(200).json({
+        success: true,
+        message: "Admin already exists. Token generated.",
+        token,
+      });
     }
-  };
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error creating default admin",
+      error: error.message,
+    });
+  }
+};

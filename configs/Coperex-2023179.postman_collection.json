@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "60d1812b-f4cd-4c19-a2aa-043d0853ba46",
+		"name": "Coperex-2023179",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37589075"
+	},
+	"item": [
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "Obtener usuario por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/findUser/{uid}"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/user"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/updateUser/{uid}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compañias",
+			"item": [
+				{
+					"name": "Crear Empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Empresa informatica\",\r\n  \"description\": \"Descripción de la empresa informatica\",\r\n  \"levelImpact\": \"Medio\",\r\n  \"yearsTrajectory\": 2015,\r\n  \"category\": \"Tecnología\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:3000/coperex/v1/company"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/company"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas ascendente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company?limite=10&desde=0&order=asc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company"
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "10"
+								},
+								{
+									"key": "desde",
+									"value": "0"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas descendente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/?limite=10&desde=0&order=desc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								""
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "10"
+								},
+								{
+									"key": "desde",
+									"value": "0"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/?category=Servicios",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								""
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Servicios"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas TrayecYears min 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/?minYears=5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								""
+							],
+							"query": [
+								{
+									"key": "minYears",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas TrayecYears max 10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/?maxYears=10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								""
+							],
+							"query": [
+								{
+									"key": "maxYears",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar empresas combinado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/?limite=10&desde=0&order=desc&minYears=5&maxYears=15&category=salud",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								""
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "10"
+								},
+								{
+									"key": "desde",
+									"value": "0"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "minYears",
+									"value": "5"
+								},
+								{
+									"key": "maxYears",
+									"value": "15"
+								},
+								{
+									"key": "category",
+									"value": "salud"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener empresa por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/company"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar empresa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/company/{id}"
+					},
+					"response": []
+				},
+				{
+					"name": "Generar reporte Excel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2JmNzRhODQ3Yzk3MDZkN2QyNjY4ZjAiLCJpYXQiOjE3NDA2MDY0OTgsImV4cCI6MTc0MDYxMDA5OH0.zNBf9CPTUhy4xlt-oXBmFFcP86Q6N84cTy8UtbZn4Jg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/coperex/v1/company/report/excel/?category=Servicios&minYears=5&order=desc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"coperex",
+								"v1",
+								"company",
+								"report",
+								"excel",
+								""
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Servicios"
+								},
+								{
+									"key": "minYears",
+									"value": "5"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://127.0.0.1:3000/coperex/v1/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@example.com\",\r\n  \"username\": \"admin123\",\r\n  \"password\": \"SecureP@ssword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:3000/coperex/v1/auth/login"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

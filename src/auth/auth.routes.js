@@ -11,8 +11,6 @@ import { registerValidator, loginValidator } from "../middlewares/user-validator
 const router = Router();
 
 /**
- * Ruta para registrar un nuevo usuario.
- *
  * @swagger
  * /register:
  *   post:
@@ -35,20 +33,14 @@ const router = Router();
  *                 type: string
  *                 format: binary
  *     responses:
- *       200:
+ *       201:
  *         description: Usuario registrado exitosamente
  *       400:
  *         description: Error en la solicitud
  */
-router.post(
-    "/register",  // Endpoint para el registro de usuario
-    registerValidator, // Middleware de validación de datos
-    register // Controlador que maneja el registro
-);
+router.post("/register", registerValidator, register);
 
 /**
- * Ruta para iniciar sesión de un usuario.
- *
  * @swagger
  * /login:
  *   post:
@@ -71,10 +63,6 @@ router.post(
  *       400:
  *         description: Error en la solicitud
  */
-router.post(
-    "/login",  // Endpoint para el inicio de sesión
-    loginValidator, // Middleware de validación de datos de inicio de sesión
-    login // Controlador que maneja la autenticación
-);
+router.post("/login", loginValidator, login);
 
-export default router; // Exportamos el enrutador para su uso en la aplicación principal
+export default router;

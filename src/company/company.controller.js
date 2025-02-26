@@ -128,26 +128,31 @@ export const updateCompany = async (req, res) => {
 };
 
 /**
- * @description Registra una nueva empresa en la base de datos.
+ * Registra una nueva empresa en la base de datos.
  * @route POST /api/v1/companies
  * @access Privado (Solo Administradores)
  * @body {string} name - Nombre de la empresa.
  * @body {string} description - Descripción de la empresa.
  * @body {string} levelImpact - Nivel de impacto (Bajo, Medio, Alto).
- * @body {number} yearsTrajectory - Años de trayectoria.
+ * @body {number} yearsTrajectory - Año de fundación de la empresa.
  * @body {string} category - Categoría de la empresa.
  */
 export const createCompany = async (req, res) => {
   try {
     const { name, description, levelImpact, yearsTrajectory, category } = req.body;
 
+    // Se interpreta que el valor de "yearsTrajectory" es el año de fundación.
+    const foundingYear = parseInt(yearsTrajectory, 10);
+    const currentYear = new Date().getFullYear();
+    const computedYearsTrajectory = currentYear - foundingYear;
+
     const newCompany = new Company({
       name,
       description,
       levelImpact,
-      yearsTrajectory,
+      yearsTrajectory: computedYearsTrajectory, // Se almacena la diferencia calculada
       category,
-      createdBy: req.usuario._id, // Asigna el ID del usuario ADMIN que la creó
+      createdBy: req.usuario._id, // Se asume que req.usuario contiene el usuario autenticado (ADMIN)
     });
 
     await newCompany.save();
@@ -165,6 +170,7 @@ export const createCompany = async (req, res) => {
     });
   }
 };
+
 
 /**
  * @description Genera un reporte en formato Excel con todas las empresas registradas.
@@ -213,8 +219,14 @@ export const generateCompaniesReport = async (req, res) => {
       });
     });
 
-    // Guardar archivo y enviarlo
-    const filePath = path.join(process.cwd(), "reports", "Empresas_Reporte.xlsx");
+    // Verificar si la carpeta "reports" existe y, si no, crearla
+    const reportsDir = path.join(process.cwd(), "reports");
+    if (!fs.existsSync(reportsDir)) {
+      fs.mkdirSync(reportsDir, { recursive: true });
+    }
+
+    // Guardar el archivo y enviarlo
+    const filePath = path.join(reportsDir, "Empresas_Reporte.xlsx");
     await workbook.xlsx.writeFile(filePath);
     res.download(filePath, "Empresas_Reporte.xlsx", () => fs.unlinkSync(filePath));
   } catch (err) {

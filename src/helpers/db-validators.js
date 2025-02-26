@@ -1,5 +1,5 @@
 import User from "../user/user.model.js"
-
+import Company from "../company/company.model.js";
 
 /**
  * Verifica si un email ya está registrado en la base de datos.
@@ -67,3 +67,21 @@ export const existeAdmin = async() => {
     return true;
 }
 
+/**
+ * Verifica si una empresa con el ID proporcionado existe en la base de datos.
+ */
+export const companyExists = async (id = "") => {
+    const existe = await Company.findById(id);
+    if (!existe) {
+      throw new Error("No existe la empresa con el ID proporcionado");
+    }
+  };
+
+  export const foundingYearValidator = (value) => {
+    const currentYear = new Date().getFullYear();
+    if (parseInt(value, 10) > currentYear) {
+      throw new Error("El año de fundación no puede ser mayor al año actual");
+    }
+    return true;
+  };
+  
