@@ -1,8 +1,40 @@
 import { Router } from "express";
-import { updateUser } from "./user.controller.js";
-import { adminUpdateUserValidator, updateUserValidator } from "../middlewares/user-validators.js";
+import { updateUser, getUserById, getUsers } from "./user.controller.js";
+import { adminUpdateUserValidator, updateUserValidator, getUserByIdValidator } from "../middlewares/user-validators.js";
 
 const router = Router();
+
+/**
+ * @swagger
+ * /findUser/{uid}:
+ *   get:
+ *     summary: Obtiene un usuario por ID
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: uid
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado
+ *       404:
+ *         description: Usuario no encontrado
+ */
+router.get("/findUser/:uid", getUserByIdValidator, getUserById)
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Obtiene todos los usuarios
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ */
+router.get("/", getUsers)
 
 /**
  * @swagger
